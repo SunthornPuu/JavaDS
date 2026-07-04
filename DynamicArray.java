@@ -47,13 +47,42 @@ public class DynamicArray<T extends Comparable<T>> {
                 data[size-1] = null;
                 size--;
         }
+        @SuppressWarnings("unchecked")
+        // don't warn me unchecked cast
+        // @ rule will put above where it will apply
+        T get(int i){
+                return (T)data[i];
+        }
+        void set(int i,int value){
+                data[i]=value;
+        }
 }
 
-class Vector<T> extends DynamicArray<T> {
-
-        
+class Vector<T extends Comparable<T> > extends DynamicArray<T> {
+        void sort_r(int l,int r){
+                if (l==r) return;
+                int mid = (l+r)/2;
+                sort_r(l,mid);
+                sort_r(mid+1,r);
+                Object[] temp = new Object[r-l+1];
+                for(int i=l;i<=r;i++) temp[i-l] = data[i];
+                int itr_l = l,itr_r = mid+1;
+                int itr = l;
+                while(itr_l != mid && itr_r != r){
+                        if(itr_r != r)
+                                if(itr_l == mid || ((T)temp[itr_r-l]).compareTo((T)temp[itr_l-l]) <= 0) {
+                                        data[itr] = temp[itr_r-l];
+                                        itr_r++;
+                                }
+                        else{
+                                data[itr] = temp[itr_l-l];
+                                itr_l++;
+                        }
+                        itr++;
+                }
+        }
 }
 
-class MyString<T> extends DynamicArray<T> {
+class MyString<T extends Comparable<T> > extends DynamicArray<T> {
 
 }
