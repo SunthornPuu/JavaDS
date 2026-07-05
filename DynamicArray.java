@@ -1,4 +1,3 @@
-package JavaDS;
 
 
 public class DynamicArray<T extends Comparable<T>> {
@@ -68,21 +67,35 @@ class Vector<T extends Comparable<T> > extends DynamicArray<T> {
                 for(int i=l;i<=r;i++) temp[i-l] = data[i];
                 int itr_l = l,itr_r = mid+1;
                 int itr = l;
-                while(itr_l != mid && itr_r != r){
-                        if(itr_r != r)
-                                if(itr_l == mid || ((T)temp[itr_r-l]).compareTo((T)temp[itr_l-l]) <= 0) {
+                while(itr_l != mid+1 || itr_r != r+1){
+                        // System.out.println(l+" "+r);
+                        // System.out.println(itr+" |"+itr_l+" "+itr_r+"|");
+                        if(itr_r != r+1){
+                                if(itr_l == mid+1 || ((T)temp[itr_r-l]).compareTo((T)temp[itr_l-l]) <= 0) {
                                         data[itr] = temp[itr_r-l];
                                         itr_r++;
                                 }
+                                else{
+                                        data[itr] = temp[itr_l-l];
+                                        itr_l++;
+                        }
+                        }
                         else{
                                 data[itr] = temp[itr_l-l];
                                 itr_l++;
                         }
                         itr++;
                 }
+                // for(Object i:data){
+                //         System.out.print(i+" ");
+                // }
+                // System.out.println();
+        }
+        void sort(){
+                sort_r(0,size-1);
         }
 }
 
-class MyString<T extends Comparable<T> > extends DynamicArray<T> {
-
+class VString<T extends Comparable<T> > extends DynamicArray<T> {
+        
 }
